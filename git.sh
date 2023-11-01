@@ -1,27 +1,23 @@
 #!/bin/bash
 
-# Define an array of commit messages
-commit_messages=("First message" "Second message" "Third message" "And so on...")
-
-# Get the current commit message index from a file
-if [ -f commit_message_index.txt ]; then
-  index=$(cat commit_message_index.txt)
+if [ -f commit_messages.txt ]; then
+  index=$(cat commit_messages.txt)
 else
   index=0
 fi
 
-# Set the commit message
-message="${commit_messages[$index]}"
+message="$index commit"
 
-# Increment the index and wrap around if it exceeds the array length
-index=$(( (index + 1) % ${#commit_messages[@]}))
+# Increment the index by 1
+index=$((index + 1))
 
-# Save the updated index to the file
-echo "$index" > commit_message_index.txt
+# Save the updated index back to commit_messages.txt
+echo "$index" > commit_messages.txt
 
-# Perform the git actions
+# Print the message
+echo "$message"
+
 git add .
-git commit -m "$message"
+git commit -m "$message"  # Use $message here
 git push
-
 
